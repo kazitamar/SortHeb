@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-double ConvertStr2Num(string s,int longestLength)
+double MatchStr2Num(string s,int longestLength)
 {
     string[] customSortOrder = new string[] {"", "A", "B", "G", "D", "H", "V", "Z", "J", "T", "Y", "K", "L", "M", "N", "S", "I", "P", "X", "Q", "R", "W", "U", "C", "E", "F", "O" };
     double n = 0;
@@ -13,24 +13,27 @@ double ConvertStr2Num(string s,int longestLength)
     return n;
 }
 
+/*The custom sort done by matching a numeric value (key) for each word in the string (value), 
+then the sort operate on the keys: smallest to largest,
+when the values are sorted by the way due to dictionary usage*/
 string CustomSort(List<string> ls)
 {
     int longestLength = ls.Max(w => w.Length);
     Dictionary<double, string> dic = new Dictionary<double, string>();
     foreach (string s in ls)
-        dic.Add(ConvertStr2Num(s, longestLength), s);
+        dic.Add(MatchStr2Num(s, longestLength), s);
     dic = dic.OrderBy(obj => obj.Key).ToDictionary(obj => obj.Key, obj => obj.Value);
     return string.Join(" ", dic.Values.ToArray());
 }
 
 //Main
 Console.WriteLine("Please enter a string");
-Regex re = new Regex("[a-zA-Z]");
+Regex a_zRegex = new Regex("[a-zA-Z]");
 string originalStr = Console.ReadLine();
 string cleanStr="";
 for (int i = 0; i < originalStr.Length; i++)
 {
-    if (re.IsMatch(originalStr[i].ToString()) || originalStr[i] == ' ')
+    if (a_zRegex.IsMatch(originalStr[i].ToString()) || originalStr[i] == ' ')
         cleanStr += originalStr[i];
 }
 cleanStr = cleanStr.Trim();
