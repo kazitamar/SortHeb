@@ -50,6 +50,6 @@ void SortHeb(string originalStr)
 //Main
 Console.WriteLine("Please enter a string");
 string originalStr = Console.ReadLine();
-SortHeb(originalStr);
 DateTime start = DateTime.Now;
+SortHeb(originalStr);
 Console.WriteLine("Sort time: " + (DateTime.Now - start).ToString());
