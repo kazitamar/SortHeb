@@ -26,25 +26,30 @@ string CustomSort(List<string> ls)
     return string.Join(" ", dic.Values.ToArray());
 }
 
+void SortHeb(string originalStr)
+{
+    Regex a_zRegex = new Regex("[a-zA-Z]");
+    string cleanStr = "";
+    for (int i = 0; i < originalStr.Length; i++)
+    {
+        if (a_zRegex.IsMatch(originalStr[i].ToString()) || originalStr[i] == ' ')
+            cleanStr += originalStr[i];
+    }
+    cleanStr = cleanStr.Trim();
+    if (cleanStr.Length < 1)
+        Console.WriteLine("There are no legal chars to sort");
+    else
+    {
+        List<string> ls = cleanStr.Split(' ').ToList();
+        ls.RemoveAll(s => s == "");
+        cleanStr = CustomSort(ls);
+        Console.WriteLine("Sorted string:" + cleanStr);
+    }
+}
+
 //Main
 Console.WriteLine("Please enter a string");
-Regex a_zRegex = new Regex("[a-zA-Z]");
 string originalStr = Console.ReadLine();
-string cleanStr="";
-for (int i = 0; i < originalStr.Length; i++)
-{
-    if (a_zRegex.IsMatch(originalStr[i].ToString()) || originalStr[i] == ' ')
-        cleanStr += originalStr[i];
-}
-cleanStr = cleanStr.Trim();
-if (cleanStr.Length < 1)
-    Console.WriteLine("There are no legal chars to sort");
-else
-{
-    DateTime start = DateTime.Now;
-    List<string> ls = cleanStr.Split(' ').ToList();
-    ls.RemoveAll(s => s == "");
-    cleanStr = CustomSort(ls);
-    Console.WriteLine("Sorted string:" + cleanStr);
-    Console.WriteLine("Sort time: " + (DateTime.Now - start).ToString());
-}
+SortHeb(originalStr);
+DateTime start = DateTime.Now;
+Console.WriteLine("Sort time: " + (DateTime.Now - start).ToString());
